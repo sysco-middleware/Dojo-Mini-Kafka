@@ -1,0 +1,12 @@
+[Unit]
+Description=Apache Kafka
+Requires=zookeeper.service
+After=zookeeper.service
+[Service]
+Type=simple
+User=dojokafka
+Group=dojo
+ExecStart=/home/dojokafka/kafka/bin/kafka-server-start.sh /home/dojokafka/kafka/config/server.properties
+ExecStop=/home/dojokafka/kafka/bin/kafka-server-stop.sh
+[Install]
+WantedBy=multi-user.target

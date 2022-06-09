@@ -1,0 +1,12 @@
+[Unit]
+Description=Bootstrapped Zookeeper
+After=syslog.target network.target
+[Service]
+Type=simple
+User=dojokafka
+Group=dojo
+WorkingDirectory=/home/dojokafka
+ExecStart=/home/dojokafka/kafka/bin/zookeeper-server-start.sh /home/dojokafka/kafka/config/zookeeper.properties
+ExecStop=/home/dojokafka/kafka/bin/zookeeper-server-stop.sh
+[Install]
+WantedBy=multi-user.target

@@ -29,7 +29,7 @@
        - name:  untar the binaries
          become: yes 
          become_user: dojokafka
-         ansible.builtin.unarchive:
+         unarchive:
            src: "{{ home }}/kafka_2.13-3.2.0.tgz"
            dest: '{{ home }}'
            remote_src: yes
@@ -38,7 +38,7 @@
        - name: Create a symbolic link
          become: yes 
          become_user: dojokafka
-         ansible.builtin.file:
+         file:
            src: kafka_2.13-3.2.0
            dest: '{{ base }}'
            owner: dojokafka
@@ -73,6 +73,7 @@
          with_items: 
           - zookeeper.service
           - kafka.service
+          - kafkaconnect.service
 
        - name: Start services 
          become: yes 
@@ -84,9 +85,55 @@
          with_items: 
           - zookeeper.service
           - kafka.service 
+          
+
+       - name: Configure Kafka connect
+         become: yes 
+         become_user: dojokafka
+         lineinfile:
+             path: "{{ base }}/config/connect-standalone.properties"
+             regexp: '^plugin.path'
+             line: "plugin.path={{ base }}/libs/connect-file-3.2.0.jar"
+
+       - name: create test file for kafka connect
+         become: yes 
+         become_user: dojokafka
+         copy: 
+            dest: "{{ base }}/test.txt" 
+            content: | 
+              test line 1
+              test line 2
+
+       - name: update test file sink path
+         become: yes 
+         become_user: dojokafka
+         lineinfile:
+             path: "{{ base }}/config/connect-file-sink.properties"
+             regexp: '^file=test.sink.txt'
+             line: "file={{ base }}/test.sink.txt"
+
+       - name: update test file source path
+         become: yes 
+         become_user: dojokafka
+         lineinfile:
+             path: "{{ base }}/config/connect-file-source.properties"
+             regexp: '^file=test.txt'
+             line: "file={{ base }}/test.txt"
+
+      #  - name: Start kafka connect services 
+      #    become: yes 
+      #    service: 
+      #      name: '{{ item }}'
+      #      state: started
+      #      daemon_reload: yes
+      #      enabled: yes
+      #    with_items: 
+      #     - kafkaconnect.service 
+          
 
 
-       - name: check variable
-         debug:
-            var: base
-            
+
+      #  - name: check variable
+      #    debug:
+      #       var: base
+           

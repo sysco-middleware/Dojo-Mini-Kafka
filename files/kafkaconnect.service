@@ -1,0 +1,11 @@
+[Unit]
+Description=Apache Kafka connect
+Requires=kafkaconnect.service
+After=kafkaconnect.service
+[Service]
+Type=simple
+User=dojokafka
+Group=dojo
+ExecStart=/home/dojokafka/kafka/bin/connect-standalone.sh /home/dojokafka/kafka/config/connect-standalone.properties /home/dojokafka/kafka/config/connect-file-source.properties /home/dojokafka/kafka/config/connect-file-sink.properties
+[Install]
+WantedBy=multi-user.target

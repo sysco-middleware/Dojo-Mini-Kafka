@@ -1,5 +1,5 @@
 [kafkaserver1]
 158.101.208.171 ansible_user=rafi.ahmad.jan
-[all:vars]
-base=/home/dojokafka/kafka
-home=/home/dojokafka
+#[all:vars]
+#base=/home/dojokafka/kafka
+#home=/home/dojokafka

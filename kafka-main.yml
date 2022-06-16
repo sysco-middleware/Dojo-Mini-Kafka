@@ -1,0 +1,32 @@
+---
+    - name: "Install Kafka"
+      hosts: kafkaserver1
+      vars_files:
+      - '{{ playbook_dir }}/variables.yml'
+
+
+      roles:
+      - install-JDK-role
+      - kafka-install
+      - configure-zookeeper
+      - configure-kafka
+      - configure-kafkaconnect
+
+      tasks:
+    
+      - name: Start services 
+        become: yes 
+        service: 
+          name: '{{ item }}'
+          state: started
+          daemon_reload: yes
+          enabled: yes
+        with_items: 
+          - zookeeper.service
+          - kafka.service 
+          - kafkaconnect.service
+
+      # - name: check variable
+      #   debug:
+      #     var: HOME
+           

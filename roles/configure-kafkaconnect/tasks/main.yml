@@ -1,0 +1,41 @@
+---
+# tasks file for configure-kafkaconnect
+
+       - name: Create kafka connect service file
+         become: yes
+         template: 
+          src: kafkaconnect-service.j2
+          dest: '{{ SERVICE_FILE_LOC }}/kafkaconnect.service'
+
+       - name: Configure Kafka connect
+         become: yes 
+         become_user: '{{ KAFKA_USER }}'
+         lineinfile:
+           path: "{{ BASE }}/config/connect-standalone.properties"
+           regexp: '^plugin.path'
+           line: "plugin.path={{ BASE }}/libs/connect-file-3.2.0.jar"   
+
+       - name: create test file for kafka connect
+         become: yes 
+         become_user: '{{ KAFKA_USER }}'
+         copy: 
+           dest: "{{ BASE }}/test.txt" 
+           content: | 
+             test line 1
+             test line 2
+
+       - name: update test file sink path
+         become: yes 
+         become_user: '{{ KAFKA_USER }}'
+         lineinfile:
+           path: "{{ BASE }}/config/connect-file-sink.properties"
+           regexp: '^file=test.sink.txt'
+           line: "file={{ BASE }}/test.sink.txt"
+
+       - name: update test file source path
+         become: yes 
+         become_user: '{{ KAFKA_USER }}'
+         lineinfile:
+           path: "{{ BASE }}/config/connect-file-source.properties"
+           regexp: '^file=test.txt'
+           line: "file={{ BASE }}/test.txt"

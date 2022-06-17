@@ -1,6 +1,6 @@
 # Dojo Mini Kafka Platform  Installation and configuration
 
-This is a collection of Infrastructure as Code resources which can be used to install, configure and manage the lifecycle of several Kafka components.
+This is a collection of Infrastructure as Code resources which can be used to install, configure and manage the lifecycle of several Kafka components...
 
 ## How to
 

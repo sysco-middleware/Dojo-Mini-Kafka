@@ -12,21 +12,7 @@
       - configure-kafka
       - configure-kafkaconnect
 
-      tasks:
-    
-      - name: Start services 
-        become: yes 
-        service: 
-          name: '{{ item }}'
-          state: started
-          daemon_reload: yes
-          enabled: yes
-        with_items: 
-          - zookeeper.service
-          - kafka.service 
-          - kafkaconnect.service
 
-      # - name: check variable
-      #   debug:
-      #     var: HOME
-           
+
+    # - import_playbook: stop_start_kafka.yml
+      

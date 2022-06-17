@@ -1,5 +1,5 @@
 ---
-  - name: "Stop Kafka"
+  - name: "Stop start Kafka"
     hosts: kafkaserver1
     become: yes
 
@@ -21,7 +21,7 @@
           name: '{{ item }}'
           state: started
         with_items:
-          - kafkaconnect.service
-          - kafka.service
           - zookeeper.service
+          - kafka.service
+          - kafkaconnect.service
         tags: start

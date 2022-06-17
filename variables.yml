@@ -15,5 +15,4 @@ HOME: "/home/dojokafka"
 BASE: '{{ HOME }}/kafka'
 
 ## Data Directory
-
 DATA_DIR: '/data'

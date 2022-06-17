@@ -1,0 +1,10 @@
+---
+# tasks file for install-JDK-role
+      - name: Install the latest version of JDK
+        become: yes
+        yum:
+           name: jdk-11
+           state: latest
+
+
+#### plan for jdk install or other include all OS flavors

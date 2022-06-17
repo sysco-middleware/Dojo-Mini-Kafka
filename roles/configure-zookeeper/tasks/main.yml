@@ -1,0 +1,17 @@
+---
+# tasks file for configure-zookeeper
+
+ 
+- name: Create zookeeper service file
+  become: yes
+  template: 
+    src: zookeeper-service.j2
+    dest: '{{ SERVICE_FILE_LOC }}/zookeeper.service'
+
+- name: update the location for data path for zookeeper to /data
+  become: yes
+  become_user: '{{ KAFKA_USER }}'
+  lineinfile:        
+    path: '{{ BASE }}/config/zookeeper.properties'
+    regexp: '^dataDir='
+    line: 'dataDir={{ DATA_DIR }}/zookeeper'

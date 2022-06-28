@@ -2,15 +2,53 @@
 
 This is a collection of Infrastructure as Code resources which can be used to install, configure and manage the lifecycle of several Kafka components.
 
-## Rationale   
+# How to do step by step process for setting up Kafka
 
-The basic goal is to automate repeatable tasks which are common to the work we are performing and will perform at many of our customers. This helps our platform teams to become more efficient, productive and able to focus on refining / creating reusable assets.
+-> Clone the repo  
+    
+-> Download the kafka binaries archive from  https://dlcdn.apache.org/kafka/3.2.0/kafka_2.13-3.2.0.tgz
 
-## How to Make & Contribute      
-Guide your colleagues and other developers on how to clone, build and run the code in local environment.
-It's also helpful to include links to books, articles, blogs, etc.
-And if you want to attract contributions, here you should explain so.   
+-> Place the kafka archive file in files directory
 
-## Show a working version    
-Link to a functional demo, e.g. on Cloud or any DEV-friendly platforms.   
-show, don't tell  
+Links: https://www.apache.org/dyn/closer.cgi?path=/kafka/3.2.0/kafka_2.13-3.2.0.tgz
+
+Update the necessay variables in the -variables.yml
+    
+    KAFKA_ARCHIVE:      -- latest kafka binary archive 
+    INSTALLATION_DIR:   -- Directory archive is expanded to 
+
+    KAFKA_USER:         -- Operating system user who will own the installation
+    KAFKA_GROUP:        -- Group who can manage the installation
+
+    ##  ENV Variables
+    HOME:               --Home location where installation is present
+    BASE:               --common lin to installation
+
+    DATA_DIR:           -- location to store zookeeper and kafka data and logs
+   
+    
+# Prepare inventory
+
+`[kafkaserver1] 
+<HOST_IP_ADDRESS> ansible_user=<ANSIBLE_USER> `
+
+NOTE: use __ssh-add__ to add your private key to your ssh-agent
+
+## Running Playbook
+
+`ansible-playbook kafka-main.yml  ( -v for verbose, --step to run interactively)`
+
+###once kafka is installed and configured use below for daily maintenance:
+   
+`ansible-playbook stop_start_kafka.yml --tag stop (To stop kafka services)`
+    
+`ansible-playbook stop_start_kafka.yml --tag start (To start kafka services)`
+
+## Example
+
+`ansible-playbook kafka-main.yml -inventory --step -vv`
+
+### Start stop 
+`ansible-playbook stop_start_kafka.yml --tag stop (To stop kafka services)`
+    
+`ansible-playbook stop_start_kafka.yml --tag start (To start kafka services)`

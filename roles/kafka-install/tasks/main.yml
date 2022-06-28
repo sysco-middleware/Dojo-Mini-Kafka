@@ -1,0 +1,32 @@
+---
+# tasks file for kafka-install
+       - name: Copy Kafka Binaries
+         become: yes 
+         become_user: '{{ KAFKA_USER }}'
+         copy:
+           src: '{{ KAFKA_ARCHIVE }}'
+           dest: '{{ HOME }}'
+           owner: '{{ KAFKA_USER }}'
+           group: '{{ KAFKA_GROUP }}'
+           mode: 0644
+         
+
+       - name:  untar the binaries
+         become: yes 
+         become_user: '{{ KAFKA_USER }}'
+         unarchive:
+           src: '{{ HOME }}/{{ KAFKA_ARCHIVE }}'
+           dest: '{{ HOME }}'
+           remote_src: yes
+
+
+       - name: Create a symbolic link
+         become: yes 
+         become_user: '{{ KAFKA_USER }}'
+         file:
+           src: '{{ INSTALLATION_DIR }}'
+           dest: '{{ BASE }}'
+           owner: '{{ KAFKA_USER }}'
+           group: '{{ KAFKA_GROUP }}'
+           state: link
+           

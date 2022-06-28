@@ -1,5 +1,2 @@
 [kafkaserver1]
 158.101.208.171 ansible_user=jagyaseni.das
-[all:vars]
-base=/home/dojokafka/kafka
-home=/home/dojokafka

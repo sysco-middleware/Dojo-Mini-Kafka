@@ -1,0 +1,11 @@
+- name: "Install Kafka"
+  hosts: kafkaserver1
+  vars_files:
+  - `{{ playbook_dir }}/variables.yml´
+
+  roles:
+  - install-JDK-role
+  - kafka-intall
+  - configure-zookeeper
+  - configure-kafka
+  - configure-kafkaconnect

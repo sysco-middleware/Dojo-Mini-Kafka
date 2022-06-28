@@ -1,0 +1,16 @@
+---
+# tasks file for configure-kafka
+
+       - name: Create kafka service file
+         become: yes
+         template: 
+          src: kafka-service.j2
+          dest: '{{ SERVICE_FILE_LOC }}/kafka.service'
+
+       - name: update log path for kafka
+         become: yes
+         become_user: '{{ KAFKA_USER }}'
+         lineinfile:        
+           path: "{{ BASE }}/config/server.properties"
+           regexp: '^log.dirs'
+           line: "log.dirs={{ DATA_DIR }}/kafka-logs"

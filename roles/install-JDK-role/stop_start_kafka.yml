@@ -1,0 +1,27 @@
+---
+  - name: "Stop start Kafka"
+    hosts: kafkaserver1
+    become: yes
+
+    tasks:
+
+      - name: Stop kafka services, if started
+        service:
+          name: '{{ item }}'
+          state: stopped
+        with_items:
+          - kafkaconnect.service
+          - kafka.service
+          - zookeeper.service
+        tags: stop
+
+
+      - name: Start kafka services, if started
+        service:
+          name: '{{ item }}'
+          state: started
+        with_items:
+          - zookeeper.service
+          - kafka.service
+          - kafkaconnect.service
+        tags: start

@@ -1,0 +1,16 @@
+KAFKA_ARCHIVE: "kafka_2.13-3.2.0.tgz"
+INSTALLATION_DIR: "kafka_2.13-3.2.0"
+
+#User Information
+KAFKA_USER: "dojokafka"
+KAFKA_GROUP: "dojo"
+
+#Service file location
+SERVICE_FILE_LOCATION: "/etc/systemd/system"
+
+#Environment variables
+HOME: "/home/dojokafka"
+BASE: `{{ HOME }}/kafka´
+
+#Data Directory
+DATA_DIR: `/data´
